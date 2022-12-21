@@ -1,9 +1,13 @@
 {% extends 'index.html' %}
 {% block title %}To Do List{% endblock %}
 {% block content %}
-<div class="col-md-6" style="margin:0 auto;">
-  <div class="card container-fluid" style="margin-top: 1rem;">
-    <a href="/deleteAll/" class="btn btn-danger">Delete All</a>
+<br/>
+<div class="row">
+  <div class="col-md-6" style="margin: 0 auto;">
+    <a class="btn btn-success" href="{% url 'sortdata' %}" style="width: 920px">Sort By Priority</a>
+    <br/>
+    <br/>
+    <a href="/deleteAll/" class="btn btn-danger" style="width: 920px">Delete All</a>
   </div>
 </div>
 {% for eachtodo in alltodos %}
