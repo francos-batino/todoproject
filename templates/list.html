@@ -1,6 +1,11 @@
 {% extends 'index.html' %}
 {% block title %}To Do List{% endblock %}
 {% block content %}
+<div class="col-md-6" style="margin:0 auto;">
+  <div class="card container-fluid" style="margin-top: 1rem;">
+    <a href="/deleteAll/" class="btn btn-danger">Delete All</a>
+  </div>
+</div>
 {% for eachtodo in alltodos %}
 <div class="row">
     <div class="col-md-6" style="margin:0 auto;">
@@ -10,7 +15,9 @@
               <p class="card-text">Description: {{eachtodo.description}}</p>
               <p class="card-text">Created: {{eachtodo.created_at}}</p>
               <p class="card-text">Priority: {{eachtodo.priority}}</p>
-
+              <p class="card-text">Done: {{eachtodo.done}}</p>
+              
+              <a href="/done/{{eachtodo.id}}" class="btn btn-success">Done</a>
               <a href="/edit/{{eachtodo.id}}" class="btn btn-warning">Edit</a>
               <a href="/delete/{{eachtodo.id}}" class="btn btn-danger">Delete</a>
             </div>

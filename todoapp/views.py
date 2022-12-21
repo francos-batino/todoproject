@@ -11,6 +11,7 @@ def submit(request):
     obj.title = request.GET['title']
     obj.description = request.GET['description']
     obj.priority = request.GET['priority']
+    obj.done = False
     obj.save()
     mydictionary = {
         "alltodos" : Todo.objects.all()
@@ -24,6 +25,25 @@ def delete(request,id):
         "alltodos" : Todo.objects.all()
     }
     return render(request,'list.html',context=mydictionary)
+
+def deleteAll(request):
+    obj = Todo.objects.all()
+    obj.delete()
+    mydictionary = {
+        "alltodos" : Todo.objects.all()
+    }
+    return render(request,'list.html',context=mydictionary)
+
+def done(request,id):
+    obj = Todo.objects.get(id=id)
+    obj.done = True
+    obj.priority = 0
+    obj.save()
+    mydictionary = {
+        "alltodos" : Todo.objects.all()
+    }
+    return render(request,'list.html',context=mydictionary)
+
 
 def list(request):
     mydictionary = {
@@ -50,7 +70,8 @@ def edit(request,id):
         "title" : obj.title,
         "description" : obj.description,
         "priority" : obj.priority,
-        "id" : obj.id
+        "id" : obj.id,
+        "done" : obj.done
     }
     return render(request,'edit.html',context=mydictionary)
 
@@ -60,6 +81,7 @@ def update(request,id):
     obj.title = request.GET['title']
     obj.description = request.GET['description']
     obj.priority = request.GET['priority']
+    obj.done = request.GET['done']
     import datetime
     updated_at = datetime.datetime.now()
     obj.created_at = updated_at
