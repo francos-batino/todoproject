@@ -7,8 +7,11 @@ class todo():
 
     def obj(id):
         return Todo.objects.get(id=id)
-    def all():
-        return Todo.objects.all()
+    def dictionary():
+        mydictionary = {
+            "alltodos" : Todo.objects.all()
+        }
+        return mydictionary
 
 
 # Create your views here.
@@ -22,46 +25,31 @@ def submit(request):
     obj.priority = request.GET['priority']
     obj.done = False
     obj.save()
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
 
 def delete(request,id):
     obj = todo.obj(id)
     obj.delete()
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
 
 def deleteAll(request):
     obj = todo.all()
     obj.delete()
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
 
 def done(request,id):
     obj = todo.obj(id)
     obj.done = True
     obj.priority = 0
     obj.save()
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
 
 def list(request):
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
 
 def sortdata(request):
     mydictionary ={
-        "alltodos" : todo.all().order_by('-priority')
+        "alltodos" : Todo.objects.all().order_by('-priority')
     }
     return render(request,'list.html',context=mydictionary)
 
@@ -93,7 +81,4 @@ def update(request,id):
     updated_at = datetime.datetime.now()
     obj.created_at = updated_at
     obj.save()
-    mydictionary = {
-        "alltodos" : todo.all()
-    }
-    return render(request,'list.html',context=mydictionary)
+    return render(request,'list.html',context=todo.dictionary())
